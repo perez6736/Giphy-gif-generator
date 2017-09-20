@@ -23,6 +23,8 @@ function addGifButton(event){
     var gif = $("#gif-input").val().trim(); //get the user input and trim spaces
     gifs.push(gif); // add to array
     renderButtons(); // must re render the list opf buttons
+
+    //nice to have - check if button already exists and dont allow blank entries 
 }
 
 function aJax(URL, METHOD, CALLBACK){ //creating a ajax method so i can only call this once
@@ -60,7 +62,7 @@ function getStillGifs(response){
 		// get the still image of the gif and display it giving an attribute of the index it was in the array. 
 		displayGifs(gifArray[i].images.original_still.url, i);
 
-		// need to get the rating for the gifs. 
+		// TODO - need to get the rating for the gifs. 
 	}
 }
 
