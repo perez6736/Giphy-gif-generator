@@ -34,7 +34,7 @@ function aJax(URL, METHOD, CALLBACK){ //creating a ajax method so i can only cal
 	}).done(CALLBACK);
 }
 
-function displayGifs(gifImg, index){ // add the ratings 
+function displayGifs(gifImg, rating, index){ // add the ratings 
 	//create a div
 	var imgContainer = $("<div>"); 
 	//create an img tag 
@@ -47,6 +47,8 @@ function displayGifs(gifImg, index){ // add the ratings
 	imgContainer.addClass("image-container"); 
 	// give the contianer tag an attr of the index it was in the array 
 	imgContainer.attr("data-indexed", index); 
+	// put the rating on the page. 
+	imgContainer.text("The rating is: " + rating);
 	//append the container to the gif view
 	$("#gif-view").append(imgContainer); 
 	//append the imgtag to the container div
@@ -60,7 +62,7 @@ function getStillGifs(response){
 	$(".image-container").detach(); //clear the gifview div before adding stuff to it
 	for(i=0; i<gifArray.length; i++){ //loop through each index of data or each gif
 		// get the still image of the gif and display it giving an attribute of the index it was in the array. 
-		displayGifs(gifArray[i].images.original_still.url, i);
+		displayGifs(gifArray[i].images.original_still.url, gifArray[i].rating ,i);
 
 		// TODO - need to get the rating for the gifs. 
 	}
