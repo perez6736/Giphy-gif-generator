@@ -34,6 +34,24 @@ function aJax(URL, METHOD, CALLBACK){ //creating a ajax method so i can only cal
 	}).done(CALLBACK);
 }
 
+function getDataType(){
+	var gifType = ($(this).attr("data-name")); //get data name from button
+	// make the url with the data type 
+	var queryURL = giphyBaseUrl+"?q="+gifType+"&limit=10&api_key="+APIkey;
+	//ajax call. 
+	aJax(queryURL, "GET", getStillGifs);
+}
+
+function getStillGifs(response){
+	gifArray = response.data; //data is the array in the object returned from giphy 
+	console.log(response);
+	$(".image-container").detach(); //clear the gifview div before adding stuff to it
+	for(i=0; i<gifArray.length; i++){ //loop through each index of data or each gif
+		// get the still image of the gif and display it giving an attribute of the index it was in the array. 
+		displayGifs(gifArray[i].images.original_still.url, gifArray[i].rating ,i);
+	}
+}
+
 function displayGifs(gifImg, rating, index){ // add the ratings 
 	//create a div
 	var imgContainer = $("<div>"); 
@@ -54,26 +72,6 @@ function displayGifs(gifImg, rating, index){ // add the ratings
 	//append the imgtag to the container div
 	imgContainer.append(imgTag);
 	
-}
-
-function getStillGifs(response){
-	gifArray = response.data; //data is the array in the object returned from giphy 
-	console.log(response);
-	$(".image-container").detach(); //clear the gifview div before adding stuff to it
-	for(i=0; i<gifArray.length; i++){ //loop through each index of data or each gif
-		// get the still image of the gif and display it giving an attribute of the index it was in the array. 
-		displayGifs(gifArray[i].images.original_still.url, gifArray[i].rating ,i);
-
-		// TODO - need to get the rating for the gifs. 
-	}
-}
-
-function getDataType(){
-	var gifType = ($(this).attr("data-name")); //get data name from button
-	// make the url with the data type 
-	var queryURL = giphyBaseUrl+"?q="+gifType+"&limit=10&api_key="+APIkey;
-	//ajax call. 
-	aJax(queryURL, "GET", getStillGifs);
 }
 
 function playGif(){
